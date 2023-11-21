@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  #사용할 포트번호
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  thymeleaf:
+    cache: false
+    #타임리프 엔진 캐시 비활성화
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    #SQL 쿼리를 로그에 출력
+    hibernate:
+      ddl-auto: create
+      #기존에 담아둔게 없기때문에 - (서버 실행시 기존에 있던 테이블 drop)
+      #기존에있는 DB에다가넣기때문에 조심해줘야함!!!!!!!!! - 보통은 update로둠
+
+  h2:
+    console:
+      enabled: true
