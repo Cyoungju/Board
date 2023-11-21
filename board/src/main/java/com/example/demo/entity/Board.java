@@ -30,7 +30,6 @@ public class Board {
     private LocalTime updateTime;
 
     @Builder
-
     public Board(Long id, String userName, String title, String contents, LocalTime createTime, LocalTime updateTime) {
         this.id = id;
         this.userName = userName;
