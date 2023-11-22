@@ -1,11 +1,17 @@
 package com.example.demo.entity;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
+@Getter
+@NoArgsConstructor
 @Entity
 public class Board {
+    //Entity -> DB에 저장하기 위해서
     // ** pk
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +30,13 @@ public class Board {
     private String contents;
 
     // ** 작성 시간
-    private LocalTime createTime;
+    private LocalDateTime createTime;
 
     // ** 최근 수정 시간
-    private LocalTime updateTime;
+    private LocalDateTime updateTime;
 
     @Builder
-    public Board(Long id, String userName, String title, String contents, LocalTime createTime, LocalTime updateTime) {
+    public Board(Long id, String userName, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
         this.userName = userName;
         this.title = title;
