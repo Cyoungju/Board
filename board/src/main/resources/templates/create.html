@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BoardList</title>
+</head>
+<body>
+    <div class="board write">
+        <div class="container">
+            <form action="/board/save" method="post" enctype="multipart/form-data">
+                <!--글작성 버튼 클릭시 /board/save링크로 이동 -->
+                <!-- post의 방법으로 -->
+                <!-- /board/save -->
+
+                <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName"> </div>
+                <div class="inputBox"><h3>title : </h3> <input type="text" name="title"> </div>
+                <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10"></textarea> </div>
+                <input type="submit" value="글작성">
+            </form>
+        </div>
+    </div>
+
+
+</body>
+<style>
+    .board{padding: 120px 0;}
+    .container{max-width:1200px;margin: auto}
+    .inputBox{display:flex;margin-bottom:10px}
+    h3{margin:0;width:120px;}
+</style>
+</html>

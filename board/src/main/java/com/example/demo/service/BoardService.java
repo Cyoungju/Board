@@ -9,18 +9,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 
+@Transactional(readOnly = true) //서비스에는 readOnly 들어가야함
 @RequiredArgsConstructor
 @Service
 public class BoardService {
     private final BoardRepository repository;
 
-    public void save(BoardDTO boardDTO){
-        boardDTO.setCreateTime(LocalDateTime.now());//현재 시간 넣기
-        repository.save(boardDTO.toEntity());
-    }
 
     public void findAll(){
         repository.findAll();
@@ -36,8 +34,8 @@ public class BoardService {
 
         // ** 전체 게시물을 불러온다
         Page<Board> boards = repository.findAll(
-            // 정렬시켜서 사가져옴
-            PageRequest.of(page, size)
+                // 정렬시켜서 사가져옴
+                PageRequest.of(page, size)
         );
 
         return boards.map(board -> new BoardDTO( //람다식
@@ -51,4 +49,65 @@ public class BoardService {
                 // 람다식 공부하기!
         ));
     }
+
+    public BoardDTO findById(Long id) {
+        //Optional존재유무 확인
+        Optional<Board> boardOptional = repository.findById(id);
+
+        if (boardOptional.isPresent()) {
+            Board board = repository.findById(id).get();
+            return BoardDTO.toboardDTO(board);
+        }else {
+            return null;
+        }
+
+    }
+
+    //변경사항이 발생
+    @Transactional
+    public void save(BoardDTO boardDTO){
+        repository.save(boardDTO.toEntity());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Transactional
+    public void update(BoardDTO boardDTO) {
+        Optional<Board> boardOptional = repository.findById(boardDTO.getId());
+
+        //if (repository.findById(id).isPresent())...  예외처리 생략
+
+        Board board = boardOptional.get();
+        board.updateFromDTO(boardDTO);
+
+        repository.save(board);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

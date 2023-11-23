@@ -25,8 +25,7 @@ public class BoardDTO {
 
     private LocalDateTime updateTime;
 
-
-    @Builder
+    // DTO -> toEntity로 변환
     public Board toEntity() {
         return Board.builder()
                 .title(title)
@@ -36,4 +35,38 @@ public class BoardDTO {
                 .userName(userName)
                 .build();
     }
+
+    //toEntity -> DTO로 변환
+    public static BoardDTO toboardDTO(Board board){
+        return new BoardDTO(
+                board.getId(),
+                board.getUserName(),
+                board.getTitle(),
+                board.getContents(),
+                board.getCreateTime(),
+                board.getUpdateTime());
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
