@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.entity.Comment;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService service;
+    private final CommentService commentService;
 
     //Create
     @GetMapping("/create")
@@ -72,6 +76,8 @@ public class BoardController {
         model.addAttribute("board", dto); //html에 있는 변수명이랑 동일하게 사용
         model.addAttribute("page", pageable.getPageNumber());
 
+
+
         /* 데이터 확인용
         System.out.println(board.get().getId());
         System.out.println(board.get().getTitle());
@@ -80,6 +86,7 @@ public class BoardController {
         System.out.println(board.get().getUpdateTime());
         System.out.println(board.get().getUserName());
         */
+
 
         return "detail";
     }

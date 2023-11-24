@@ -19,12 +19,6 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository repository;
 
-
-    public void findAll(){
-        repository.findAll();
-    }
-
-
     // ** 페이징을 위한 함수
     // Page<BoardDTO> 페이징을 표현할 리스트
     // pageable 수량 정보 작성
@@ -50,6 +44,7 @@ public class BoardService {
         ));
     }
 
+
     public BoardDTO findById(Long id) {
         //Optional존재유무 확인
         Optional<Board> boardOptional = repository.findById(id);
@@ -60,8 +55,8 @@ public class BoardService {
         }else {
             return null;
         }
-
     }
+
 
     //변경사항이 발생
     @Transactional
@@ -69,10 +64,12 @@ public class BoardService {
         repository.save(boardDTO.toEntity());
     }
 
+
     @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
 
     @Transactional
     public void update(BoardDTO boardDTO) {
