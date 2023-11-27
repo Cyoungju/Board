@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Builder
 public class Comment {
 
     @Id
@@ -20,7 +19,7 @@ public class Comment {
     @Column(length = 50)
     private String writer;
 
-    @Column(length = 50)
+    @Column(length = 300)
     private String contents;
 
     //비소유 했지만 확인 가능

@@ -26,7 +26,7 @@ public class Board {
     private String userName;
 
     // ** 게시물 제목
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String title;
 
     // ** 내용
@@ -47,6 +47,10 @@ public class Board {
     // fetch = FetchType.LAZY : 지연로딩(성능 최적화)
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<File> files = new ArrayList<>();
+
 
 
     @Builder

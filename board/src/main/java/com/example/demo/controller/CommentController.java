@@ -25,15 +25,9 @@ public class CommentController {
     @PostMapping("/save")
     public ResponseEntity save(@ModelAttribute CommentDTO commentDTO){
 
-        System.out.println(commentDTO);
         Comment comment = commentService.save(commentDTO);
 
-        System.out.println(comment.getId());
-        System.out.println(comment.getWriter());
-        System.out.println(comment.getContents());
-
-        //List<Comment> allComments = commentService.getAllComments();
-
+        //저장된 댓글가져오기
         List<CommentDTO> all = commentService.findAll(commentDTO.getBoardId());
 
         //예외처리 해주기
