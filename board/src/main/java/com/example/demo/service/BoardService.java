@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.FileDTO;
 import com.example.demo.entity.Board;
-import com.example.demo.entity.File;
+import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -86,29 +88,59 @@ public class BoardService {
 
     //변경사항이 발생
     @Transactional
-    public void save(BoardDTO boardDTO, FileDTO fileDTO, MultipartFile[] files) throws IOException{
-        Board save = boardRepository.save(boardDTO.toEntity());
+    public void save(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+        //게시물 현재시간 저장
+        boardDTO.setCreateTime(LocalDateTime.now());
 
-        // ** 파일 정보 저장
-        for(MultipartFile file : files){
-            createFilePath(file);
+        Path uploadPath = Paths.get(filePath);
 
-            fileDTO.setFilePath(createFilePath(file));
-            fileDTO.setFileName(createFileName(file));
-            fileDTO.setFileType(createFileType(file));
-            fileDTO.setFileSize(createFileSize(file));
-
-            Optional<Board> optionalBoard = boardRepository.findById(save.getId());
-
-            if(optionalBoard.isPresent()) {
-                Board board = optionalBoard.get();
-                fileRepository.save(fileDTO.toEntity(board));
-            }else{
-                throw new IllegalArgumentException("게시글을 찾을 수 없습니다: " + fileDTO.getBoardId());
+        // ** 만약 경로가 없다면... 경로 생성.
+        if (!Files.exists(uploadPath)) {
+            try {
+                Files.createDirectories(uploadPath);
+            } catch (IOException e) {
+                // 예외 처리 추가 (예: 로깅)
+                e.printStackTrace();
             }
         }
 
+        // ** 게시글 DB에 저장 후 pk을 받아옴.
+        Long id = boardRepository.save(boardDTO.toEntity()).getId();
+        Board board = boardRepository.findById(id).get();
+        if (files != null && files.length > 0) {
 
+        // ** 파일 정보 저장.
+            for(MultipartFile file : files) {
+                // ** 파일명 추출
+                String originalFileName = file.getOriginalFilename();
+                if (originalFileName != null && !originalFileName.isEmpty()) {
+                    // ** 확장자 추출
+                    String formatType = originalFileName.substring(
+                            originalFileName.lastIndexOf("."));
+
+                    // ** UUID 생성
+                    String uuid = UUID.randomUUID().toString();
+
+                    // ** 경로 지정
+                    // ** C:/Users/G/Desktop/green/Board Files/{uuid + originalFileName}
+                    String path = filePath + uuid + originalFileName;
+
+                    // ** 경로에 파일을 저장.  DB 아님
+                    file.transferTo( new File(path) );
+
+                    BoardFile boardFile = BoardFile.builder()
+                            .filePath(filePath)
+                            .fileName(originalFileName)
+                            .uuid(uuid)
+                            .fileType(formatType)
+                            .fileSize(file.getSize())
+                            .board(board)
+                            .build();
+
+                    fileRepository.save(boardFile);
+                }
+            }
+        }
     }
 
 

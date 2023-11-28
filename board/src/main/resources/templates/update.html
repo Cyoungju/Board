@@ -15,6 +15,8 @@
             <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName" th:value="${board.getUserName()}"> </div>
             <div class="inputBox"><h3>title : </h3> <input type="text" name="title" th:value="${board.getTitle()}" required> </div>
             <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10" th:value="${board.getContents()}" th:text="${board.getContents()}"></textarea> </div>
+<!--            <div class="inputBox"><h3>file :</h3> <input type="file" name="files" th:value="${board.getFiles()}" multiple> </div>-->
+
             <input type="submit" value="글수정">
         </form>
     </div>

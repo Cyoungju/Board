@@ -1,0 +1,65 @@
+/* ===================================
+    Default CSS
+=================================== */
+/*  Noto Sans Font  */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+
+:root {
+    /* Layout */
+    --layoutwidth: 1200px;
+    --boldWeight:300;
+ 
+    /* Font */
+    --mainfont:'Noto Sans KR'; 
+ 
+
+}
+
+/* ==================================================================
+    Reset 초기화 (2022.03.28)
+===================================================================== */
+
+*{outline:none;}
+*, :after, :before {box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary, time, mark, audio, video {margin: 0;padding: 0;border: 0;font: inherit;vertical-align: baseline;}
+
+html, body{font-family: var(--mainfont), sans-serif;font-weight:var(--boldWeight);}
+body{-webkit-font-smoothing: antialiased;-font-smoothing: antialiased;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
+div,span,p,ul,ol,li,dd,dt,dl,h1,h2,h3,h4,h5,h6{word-break: keep-all;} /* 줄바꿈 속성 (단어기준)*/
+h1, h2, h3, h4, h5, h6{margin: 0;padding: 0;font-family: inherit;}
+a{text-decoration:none;color:#333;-webkit-tap-highlight-color: transparent;}
+
+
+ul,li, ol, dl,dt,dd {list-style:none}
+b, strong {font-weight: 500;}
+small{font-size:0.9em;vertical-align: text-bottom;}
+tbody, tfoot, thead, tr, th, td{vertical-align: middle;}
+br{font-family:sans-serif}
+img{
+    image-rendering: -moz-auto;         /* Firefox */
+    image-rendering:   -o-auto;         /* Opera */
+    image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+    image-rendering: auto;
+    -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+    display:block;
+    max-width:100%;
+}
+
+
+::-webkit-input-placeholder { color: #6f6f6f; text-overflow: ellipsis;}
+::-moz-placeholder { color: #6f6f6f; text-overflow: ellipsis; opacity:1;}
+::-ms-input-placeholder { color: #6f6f6f; text-overflow: ellipsis; opacity:1;}
+
+
+@media (max-width: 500px) {
+    div,span,p,ul,ol,li,dd,dt,dl,h1,h2,h3,h4,h5,h6{word-break: keep-all;} /* 줄바꿈 속성 (글자기준)*/
+}
+.container{width:var(--layoutwidth);margin: auto;}

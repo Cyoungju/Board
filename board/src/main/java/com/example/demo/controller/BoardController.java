@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CommentDTO;
 import com.example.demo.dto.FileDTO;
+import com.example.demo.entity.BoardFile;
+import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardservice;
+    private final FileRepository fileRepository;
     private final CommentService commentService;
 
     //Create
@@ -92,19 +95,20 @@ public class BoardController {
         model.addAttribute("page", pageable.getPageNumber());
         model.addAttribute("commentList", commentList);
 
+        List<BoardFile> byBoardFiles = fileRepository.findByBoardId(id);
+        model.addAttribute("files", byBoardFiles);
+
         return "detail";
     }
 
 
     //Update
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO, FileDTO fileDTO, @RequestParam MultipartFile[] files) throws IOException {
+    public String save(@ModelAttribute BoardDTO boardDTO , @RequestParam MultipartFile[] files) throws IOException {
         // 데이터 받아와야함 -> DTO
         // 이미지 저장시도 똑같음 - 파일 불러오기
         //@RequestParam MultipartFile[] file
-
-        boardDTO.setCreateTime(LocalDateTime.now());//현재 시간 넣기
-        boardservice.save(boardDTO, fileDTO , files);
+        boardservice.save(boardDTO , files);
 
         return "redirect:/board/";
     }

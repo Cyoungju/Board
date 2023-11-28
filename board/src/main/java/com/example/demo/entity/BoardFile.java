@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class File {
+public class BoardFile {
 
     //@Column 컬럼의 속성을 지정할때만 사용해주면됨
 
@@ -19,6 +19,9 @@ public class File {
 
     //파일 경로
     private String filePath;
+
+    // ** uuid 랜덤키
+    private String uuid;
 
     //파일이름
     private String fileName;
@@ -35,10 +38,11 @@ public class File {
 
 
     @Builder
-    public File(Long id, String filePath, String fileName, String fileType, Long fileSize, Board board) {
+    public BoardFile(Long id, String filePath, String fileName, String uuid, String fileType, Long fileSize, Board board) {
         this.id = id;
         this.filePath = filePath;
         this.fileName = fileName;
+        this.uuid = uuid;
         this.fileType = fileType;
         this.fileSize = fileSize;
         this.board = board;

@@ -49,7 +49,7 @@ public class Board {
     private List<Comment> comment = new ArrayList<>();
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<File> files = new ArrayList<>();
+    private List<BoardFile> files = new ArrayList<>();
 
 
 
