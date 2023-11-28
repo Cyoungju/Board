@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class BoardService {
-    private final BoardRepository BoardRepository;
+    private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
 
     // 절대경로
@@ -53,7 +53,7 @@ public class BoardService {
         int size = 5; // 몇개의 게시물을 넣을것인가 (페이지에 포함될 개수)
 
         // ** 전체 게시물을 불러온다
-        Page<Board> boards = BoardRepository.findAll(
+        Page<Board> boards = boardRepository.findAll(
                 // 정렬시켜서 사가져옴
                 PageRequest.of(page, size)
         );
@@ -73,10 +73,10 @@ public class BoardService {
 
     public BoardDTO findById(Long id) {
         //Optional존재유무 확인
-        Optional<Board> boardOptional = BoardRepository.findById(id);
+        Optional<Board> boardOptional = boardRepository.findById(id);
 
         if (boardOptional.isPresent()) {
-            Board board = BoardRepository.findById(id).get();
+            Board board = boardRepository.findById(id).get();
             return BoardDTO.toboardDTO(board);
         }else {
             return null;
@@ -86,23 +86,99 @@ public class BoardService {
 
     //변경사항이 발생
     @Transactional
-    public void save(BoardDTO boardDTO, MultipartFile[] files) throws IOException{
-        BoardRepository.save(boardDTO.toEntity());
+    public void save(BoardDTO boardDTO, FileDTO fileDTO, MultipartFile[] files) throws IOException{
+        Board save = boardRepository.save(boardDTO.toEntity());
 
         // ** 파일 정보 저장
-
         for(MultipartFile file : files){
-            if(file != null && file.isEmpty()){
-                createFilePath(file);
-                FileDTO fileDTO = new FileDTO();
-                fileDTO.setFileName(file.getOriginalFilename());
+            createFilePath(file);
 
-                fileRepository.save(fileDTO.toEntity());
+            fileDTO.setFilePath(createFilePath(file));
+            fileDTO.setFileName(createFileName(file));
+            fileDTO.setFileType(createFileType(file));
+            fileDTO.setFileSize(createFileSize(file));
+
+            Optional<Board> optionalBoard = boardRepository.findById(save.getId());
+
+            if(optionalBoard.isPresent()) {
+                Board board = optionalBoard.get();
+                fileRepository.save(fileDTO.toEntity(board));
+            }else{
+                throw new IllegalArgumentException("게시글을 찾을 수 없습니다: " + fileDTO.getBoardId());
             }
         }
 
+
     }
 
+
+    private String createFilePath(MultipartFile file) throws IOException {
+
+        // 업로드 경로
+        Path uploadPath = Paths.get(filePath);
+
+        // 만약 경로가 없다면 -> 생성
+        if(!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // 업로드 된 파일명 추출
+        String originalFileName = file.getOriginalFilename();
+
+        // UUID
+        String uuid = UUID.randomUUID().toString();
+
+        // 저장할 파일의 경로 설정
+        Path path = uploadPath.resolve(
+                uuid + originalFileName
+        );
+
+        Files.copy(
+                file.getInputStream(),
+                path,
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        return !originalFileName.isEmpty() ? path.toString() : null;
+    }
+
+
+    private String createFileName(MultipartFile file) {
+
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName != null && !originalFileName.isEmpty() && originalFileName.contains(".")) {
+
+            originalFileName = originalFileName.substring(
+                    0, originalFileName.lastIndexOf(".")
+            );
+        }
+        return originalFileName;
+    }
+
+
+    private String createFileType(MultipartFile file) {
+        String originalFileName = file.getOriginalFilename();
+
+        if (originalFileName != null && !originalFileName.isEmpty() && originalFileName.contains(".")) {
+
+            String formatType = originalFileName.substring(
+                    originalFileName.lastIndexOf("."));
+
+            return formatType;
+
+        }else {
+            return null;
+        }
+    }
+
+
+    private Long createFileSize(MultipartFile file) {
+        Long fileSize = file.getSize();
+
+        return fileSize;
+    }
+
+    /*
     private String createFilePath(MultipartFile file) throws IOException {
 
         Path uploadPath = Paths.get(filePath); // 기본경로
@@ -111,12 +187,12 @@ public class BoardService {
         if (!Files.exists(uploadPath))
             Files.createDirectories(uploadPath);
 
-
         // ** 파일명 추출
         String originalFileName = file.getOriginalFilename();
         System.out.println(originalFileName); //실행해서 확장자 붙어잇는지 아닌지 여부확인
 
-        if (originalFileName != null) {
+        if (originalFileName != null && !originalFileName.isEmpty() && originalFileName.contains(".")) {
+
             // ** 확장자 추출
             String formatType = originalFileName.substring(
                     originalFileName.lastIndexOf("."));
@@ -139,33 +215,37 @@ public class BoardService {
                     uuid + originalFileName + formatType
             );
 
+            //두 경로를 결합하여 새로운 경로를 생성
+            //uploadPath + (uuid + originalFileName + formatType)
+
             // ** 저장
             Files.copy(
                     file.getInputStream(), // 업로드된 파일의 입력 스트림
                     path, // 저장할 경로
                     StandardCopyOption.REPLACE_EXISTING // 이미 파일이 존재하면 덮어쓰기
             );
-            return "";
-        }
-    }
 
+        }
+        return "";
+    }
+    */
 
     @Transactional
     public void delete(Long id) {
-        BoardRepository.deleteById(id);
+        boardRepository.deleteById(id);
     }
 
 
     @Transactional
     public void update(BoardDTO boardDTO) {
-        Optional<Board> boardOptional = BoardRepository.findById(boardDTO.getId());
+        Optional<Board> boardOptional = boardRepository.findById(boardDTO.getId());
 
-        //if (BoardRepository.findById(id).isPresent())...  예외처리 생략
+        //if (boardRepository.findById(id).isPresent())...  예외처리 생략
 
         Board board = boardOptional.get();
         board.updateFromDTO(boardDTO);
 
-        BoardRepository.save(board);
+        boardRepository.save(board);
     }
 }
 

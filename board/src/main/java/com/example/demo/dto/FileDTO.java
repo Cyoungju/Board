@@ -2,16 +2,11 @@ package com.example.demo.dto;
 
 import com.example.demo.entity.Board;
 import com.example.demo.entity.File;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import lombok.*;
 
 @ToString
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class FileDTO {
 
@@ -29,12 +24,14 @@ public class FileDTO {
 
     private Long boardId;
 
-    public File toEntity(){
+
+    public File toEntity(Board board){
         return File.builder()
             .filePath(filePath)
             .fileName(fileName)
             .fileType(fileType)
             .fileSize(fileSize)
+            .board(board)
             .build();
     }
 

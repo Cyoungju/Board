@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.FileDTO;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -97,13 +98,13 @@ public class BoardController {
 
     //Update
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO, @RequestParam MultipartFile[] files) throws IOException {
+    public String save(@ModelAttribute BoardDTO boardDTO, FileDTO fileDTO, @RequestParam MultipartFile[] files) throws IOException {
         // 데이터 받아와야함 -> DTO
         // 이미지 저장시도 똑같음 - 파일 불러오기
         //@RequestParam MultipartFile[] file
 
         boardDTO.setCreateTime(LocalDateTime.now());//현재 시간 넣기
-        boardservice.save(boardDTO, files);
+        boardservice.save(boardDTO, fileDTO , files);
 
         return "redirect:/board/";
     }
