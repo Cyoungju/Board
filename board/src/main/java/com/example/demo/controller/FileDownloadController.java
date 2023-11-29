@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
-import lombok.Getter;
-import org.apache.coyote.Response;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;

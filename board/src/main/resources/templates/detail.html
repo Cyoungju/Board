@@ -155,7 +155,6 @@
                     output += "</div>";
                     output += "</div>";
 
-
                     // 댓글 수정 폼 추가
                     output += "<div id='comment-update-form-" + res[i].id + "' style='display: none;'>";
                     output += "<form id='update-comment-form-" + res[i].id + "'>";
@@ -204,7 +203,6 @@
     }
 
 
-
     // 댓글 삭제 로직
     const deleteComment = (commentId) => {
         console.log("삭제 버튼 클릭 - 댓글 ID: ", commentId);
@@ -229,7 +227,6 @@
             }
         });
     };
-
 
 
     const openUpdateForm = (commentId) => {

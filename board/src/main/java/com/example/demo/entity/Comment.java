@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.example.demo.dto.BoardDTO;
+
 import com.example.demo.dto.CommentDTO;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CommentDTO;
-import com.example.demo.dto.FileDTO;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
  
 @RequiredArgsConstructor

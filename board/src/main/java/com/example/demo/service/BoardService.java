@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BoardDTO;
-import com.example.demo.dto.FileDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
