@@ -66,6 +66,31 @@ public class CommentService {
     }
 
     @Transactional
+    public void update(Long boardId, Long commentId, CommentDTO commentDTO) {
+        // boardRepository를 사용해 boardId에 해당하는 게시글 찾기
+        Board boardEntity = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다: " + boardId));
+
+
+        // commentRepository를 사용하여 해당 게시글에 속한 댓글 중 commentId와 일치하는 댓글 찾기
+        Optional<Comment> optionalComment = commentRepository.findByIdAndBoard(commentId, boardEntity);
+
+
+        // 찾은 댓글이 있다면 수정 작업 진행
+        if (optionalComment.isPresent()) {
+            Comment foundComment = optionalComment.get();
+            foundComment.updateCommentFromDTO(commentDTO);
+
+            commentRepository.save(foundComment);
+
+        } else {
+            // 찾은 댓글이 없는 경우에 대한 처리 (예외 발생 또는 다른 방식의 처리)
+            // 예외 발생 예시:
+            throw new IllegalArgumentException("해당 댓글을 찾을 수 없습니다: " + commentId);
+        }
+    }
+
+
+    @Transactional
     public void delete(Long boardId, Long commentId) {
         // boardRepository를 사용해 boardId에 해당하는 게시글 찾기
         Board boardEntity = boardRepository.findById(boardId).get();
@@ -83,6 +108,25 @@ public class CommentService {
             throw new IllegalArgumentException("해당 댓글을 찾을 수 없습니다: " + commentId);
         }
 
+    }
+
+    @Transactional
+    public CommentDTO getCommentById(Long id) {
+        // commentRepository를 사용하여 댓글 ID에 해당하는 댓글 찾기
+        Optional<Comment> optionalComment = commentRepository.findById(id);
+
+        // 찾은 댓글이 있다면 commentDTO로 변환하여 반환
+        if (optionalComment.isPresent()) {
+            Comment commentEntity = optionalComment.get();
+            return CommentDTO.tocommentDTO(commentEntity, commentEntity.getBoard().getId());
+        } else {
+            // 찾은 댓글이 없는 경우에 대한 처리 (null 반환 또는 예외 발생 등)
+            // null 반환 예시:
+            return null;
+
+            // 예외 발생 예시:
+            // throw new IllegalArgumentException("해당 댓글을 찾을 수 없습니다: " + id);
+        }
     }
 }
 

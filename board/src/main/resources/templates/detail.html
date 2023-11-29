@@ -2,20 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
     <!-- css -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/board.css}">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 
     <!-- js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+    <title>detail</title>
 </head>
 <body>
 <div class="board view">
     <div class="container">
 
+        <!--
         <table>
             <tr>
                 <th>id</th>
@@ -38,47 +42,84 @@
                 <td th:text="${board.getContents()}"></td>
             </tr>
         </table>
+-->
+        <div class="tit animate" data-aos="fade-down">Notice</div>
+        <div class="cont_box">
+            <div class="view-tit">
+                <div th:text="${board.getTitle()}"></div>
+            </div>
+            <div class="view-desc">
+                <span><b th:text="${board.getUserName()}"></b></span>
+                <span th:text="${board.getCreateTime()}"></span>
+            </div>
+            <div class="view-cont">
+                <div class="cont" th:text="${board.getContents()}"></div>
+                <div th:if="${files != null}">
+                    <h3>첨부 파일</h3>
+                    <ul>
+                        <li th:each="file : ${files}">
+                            <!-- 다운로드 링크 추가 -->
+                            <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}">Download</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="view-btn">
+                <button onclick="listReq()">목록</button>
+                <button onclick="updateReq()">수정</button>
+                <button onclick="deleteReq()">삭제</button>
+            </div>
 
 
-        <div th:if="${files != null}">
-            <h3>첨부 파일</h3>
-            <ul>
-                <li th:each="file : ${files}">
-                    <!-- 다운로드 링크 추가 -->
-                    <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}">Download</a>
-                </li>
-            </ul>
-        </div>
+            <div class="comment-wrap">
+            <div class="comment-tit">댓글</div>
+
+            <!-- 댓글 작성 부분 -->
+            <div id="comment-write">
+                <input type="text" id="writer" placeholder="작성자">
+                <input type="text" id="contents" placeholder="내용">
+                <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+            </div>
 
 
-        <button onclick="listReq()">목록</button>
-        <button onclick="updateReq()">수정</button>
-        <button onclick="deleteReq()">삭제</button>
+            <!-- 댓글 출력 부분 -->
+            <div id="comment-list">
+                <div>
+                    <div th:each="comment: ${commentList}">
+                        <!-- 댓글 -->
+                        <div class="box" th:id="'comment-' + ${comment.id}">
+                            <div th:text="${comment.writer}"></div>
+                            <div th:text="${comment.contents}"></div>
+                            <div th:text="${comment.createTime}"></div>
+                            <div class="comment-btn">
+                                <button th:attr="onclick='openUpdateForm(' + ${comment.id} + ')'">수정</button>
+                                <button th:attr="onclick='deleteComment(' + ${comment.id} + ')'">삭제</button>
+                            </div>
+                        </div>
 
-
-        <!-- 댓글 작성 부분 -->
-        <div id="comment-write">
-            <input type="text" id="writer" placeholder="작성자">
-            <input type="text" id="contents" placeholder="내용">
-            <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
-        </div>
-
-
-        <!-- 댓글 출력 부분 -->
-        <div id="comment-list">
-            <div>
-                <div class="box" th:each="comment: ${commentList}" th:id="'comment-' + ${comment.id}">
-                   <div th:text="${comment.writer}"></div>
-                   <div th:text="${comment.contents}"></div>
-                   <div th:text="${comment.createTime}"></div>
-                    <div class="comment-btn">
-                        <button onclick="">수정</button>
-                        <button th:attr="onclick='deleteComment(' + ${comment.id} + ')'">삭제</button>
+                        <!-- 댓글 수정 폼 -->
+                        <div th:id="'comment-update-form-' + ${comment.id}" style="display: none;">
+                            <form th:id="'update-comment-form-' + ${comment.id}">
+                                <input type="hidden" th:id="'update-boardId-' + ${comment.id}" name="boardId" th:value="${board.id}" />
+                                <input type="hidden" th:id="'update-commentId-' + ${comment.id}" name="commentId" th:value="${comment.id}" />
+                                <div>
+                                    <label th:for="'update-writer-' + ${comment.id}">작성자:</label>
+                                    <input type="text" th:id="'update-writer-' + ${comment.id}" name="writer" th:value="${comment.writer}" />
+                                </div>
+                                <div>
+                                    <label th:for="'update-contents-' + ${comment.id}">내용:</label>
+                                    <input type="text" th:id="'update-contents-' + ${comment.id}" name="contents" th:value="${comment.contents}" />
+                                </div>
+                                <button type="button" th:attr="onclick='submitUpdateComment(' + ${comment.id} + ')'">댓글 수정</button>
+                                <button type="button" th:attr="onclick='cancelUpdate(' + ${comment.id} + ')'">취소</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        </div>
 
     </div>
 </div>
@@ -101,16 +142,36 @@
             },
             success: function (res) {
                 console.log("요청성공", res);
-
-                let output = "<div>";
+                    let output = "<div>";
                 for (let i in res) {
+                    output += "<div>";
                     output += "<div class='box' id='comment-" + res[i].id + "'>";
                     output += "<div>" + res[i].writer + "</div>";
                     output += "<div>" + res[i].contents + "</div>";
                     output += "<div>" + res[i].createTime + "</div>";
                     output += "<div class='comment-btn'>";
-                    output += "<button onclick=''>수정</button>";
+                    output += "<button onclick='openUpdateForm(" + res[i].id + ")'>수정</button>";
                     output += "<button onclick='deleteComment(" + res[i].id + ")'>삭제</button>";
+                    output += "</div>";
+                    output += "</div>";
+
+
+                    // 댓글 수정 폼 추가
+                    output += "<div id='comment-update-form-" + res[i].id + "' style='display: none;'>";
+                    output += "<form id='update-comment-form-" + res[i].id + "'>";
+                    output += "<input type='hidden' id='update-boardId-" + res[i].id + "' name='boardId' th:value='${board.id}' />";
+                    output += "<input type='hidden' id='update-commentId-" + res[i].id + "' name='commentId' />";
+                    output += "<div>";
+                    output += "<label for='update-writer-" + res[i].id + "'>작성자:</label>";
+                    output += "<input type='text' id='update-writer-" + res[i].id + "' name='writer' />";
+                    output += "</div>";
+                    output += "<div>";
+                    output += "<label for='update-contents-" + res[i].id + "'>내용:</label>";
+                    output += "<input type='text' id='update-contents-" + res[i].id + "' name='contents' />";
+                    output += "</div>";
+                    output += "<button type='button' onclick='submitUpdateComment(" + res[i].id + ")'>댓글 수정</button>";
+                    output += "<button type='button' onclick='cancelUpdate(" + res[i].id + ")'>취소</button>";
+                    output += "</form>";
                     output += "</div>";
                     output += "</div>";
                 }
@@ -142,6 +203,8 @@
         location.href = "/board/delete/" + id;
     }
 
+
+
     // 댓글 삭제 로직
     const deleteComment = (commentId) => {
         console.log("삭제 버튼 클릭 - 댓글 ID: ", commentId);
@@ -166,8 +229,105 @@
             }
         });
     };
+
+
+
+    const openUpdateForm = (commentId) => {
+        console.log(commentId)
+        // 예시: 댓글 정보를 가져오는 AJAX 요청
+        $.ajax({
+            type: "get",
+            url: "/comment/getComment/" + commentId,
+            success: function (comment) {
+                const updateForm = document.getElementById('comment-update-form-' + commentId);
+
+                if (updateForm) {
+                    const updateWriter = document.getElementById('update-writer-' + commentId);
+                    const updateContents = document.getElementById('update-contents-' + commentId);
+
+                    if (updateWriter && updateContents) {
+                        updateWriter.value = comment.writer;
+                        updateContents.value = comment.contents;
+
+                        // 수정 폼 보이도록 설정
+                        updateForm.style.display = 'block';
+                    } else {
+                        console.log("수정할 댓글의 수정 폼 요소를 찾을 수 없습니다.");
+                    }
+                } else {
+                    console.log("수정할 댓글의 수정 폼을 찾을 수 없습니다.");
+                }
+            },
+            error: function (err) {
+                console.log("댓글 정보 가져오기 실패", err);
+            }
+        });
+    };
+
+
+    const submitUpdateComment = (commentId) => {
+        const jsWriter = document.getElementById('update-writer-' + commentId).value;
+        const jsContents = document.getElementById('update-contents-' + commentId).value;
+        const boardId = [[${board.id}]];
+
+        $.ajax({
+            type: "post",
+            url: "/comment/update/" + boardId + "/comments/" + commentId,
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "writer": jsWriter,
+                "contents": jsContents,
+            }),
+
+            success: function (res) {
+                console.log("요청성공", res);
+
+                // 성공 시 수정 폼 숨기기
+                const updateForm = document.getElementById('comment-update-form-' + commentId);
+                if (updateForm) {
+                    updateForm.style.display = 'none';
+                } else {
+                    console.log("수정 폼 요소를 찾을 수 없습니다.");
+                }
+
+                // 화면에 수정된 내용 반영
+                const commentElement = document.getElementById('comment-' + commentId);
+                if (commentElement) {
+                    // 댓글 정보를 사용하여 화면 갱신
+                    commentElement.querySelector('div:nth-child(1)').innerText = jsWriter;
+                    commentElement.querySelector('div:nth-child(2)').innerText = jsContents;
+                } else {
+                    console.log("수정할 댓글의 HTML 요소를 찾을 수 없습니다.");
+                }
+            },
+            error: function (err) {
+                console.log("댓글 수정 실패", err);
+            }
+        });
+    };
+
+    // 댓글 수정 폼에서 '취소' 버튼 클릭 시 호출되는 함수
+    const cancelUpdate = (commentId) => {
+        // 수정 폼 숨기기
+        document.getElementById('comment-update-form-' + commentId).style.display = 'none';
+    };
+
+
+    // tit animation
+    $(".tit.animate").each(function(){
+        var tit = $(this);
+        var titSplit = tit.text().split("",-1);
+        tit.empty();
+        $.each(titSplit, function(i, b) {
+            tit.append(
+                '<p>'+
+                '<span>'+b+'</span>'+
+                '<span>'+b+'</span>'+
+                '</p>'
+            );
+        });
+    })
+    AOS.init();
 </script>
 
 </html>
-
-

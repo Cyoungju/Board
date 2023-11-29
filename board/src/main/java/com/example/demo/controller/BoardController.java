@@ -19,16 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-/*
- * 최초작성자 : 최영주
- * 최초작성일 : 2023.11.10.
- * 최종변경일 : 2023.11.27.
- * 목적 : 게시판 CRUD 작성
- * 개정이력 : 최영주,2023.11.27,utf-8지원
- * 최영주,2023.11.27,댓글작성 기능 추가
- */
-
-
+ 
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/board")

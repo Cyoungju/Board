@@ -17,7 +17,7 @@
 }
 
 /* ==================================================================
-    Reset 초기화 (2022.03.28)
+    Reset 초기화
 ===================================================================== */
 
 *{outline:none;}
@@ -59,7 +59,19 @@ img{
 ::-ms-input-placeholder { color: #6f6f6f; text-overflow: ellipsis; opacity:1;}
 
 
+/* layout */
+.container{width:var(--layoutwidth);margin: auto;}
+.cont_box {margin-top: 4.68rem;}
+
+@media (max-width: 1240px) {
+    .container{width:90%}
+}
+
+@media (max-width: 768px) {
+    .cont_box {margin-top: 3.5rem;}
+    html, body{font-size: 14px;}
+}
+
 @media (max-width: 500px) {
     div,span,p,ul,ol,li,dd,dt,dl,h1,h2,h3,h4,h5,h6{word-break: keep-all;} /* 줄바꿈 속성 (글자기준)*/
 }
-.container{width:var(--layoutwidth);margin: auto;}

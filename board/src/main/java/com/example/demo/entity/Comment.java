@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.CommentDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,10 @@ public class Comment {
     }
 
 
+    public void updateCommentFromDTO(CommentDTO commentDTO) {
+        this.writer = commentDTO.getWriter();
+        this.contents = commentDTO.getContents();
+    }
 
 
 }

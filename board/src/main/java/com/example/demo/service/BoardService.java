@@ -109,7 +109,7 @@ public class BoardService {
         Board board = boardRepository.findById(id).get();
         if (files != null && files.length > 0) {
 
-        // ** 파일 정보 저장.
+            // ** 파일 정보 저장.
             for(MultipartFile file : files) {
                 // ** 파일명 추출
                 String originalFileName = file.getOriginalFilename();
