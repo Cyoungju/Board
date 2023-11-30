@@ -43,6 +43,7 @@ public class Comment {
     }
 
 
+    //DTO -> Entity
     public void updateCommentFromDTO(CommentDTO commentDTO) {
         this.writer = commentDTO.getWriter();
         this.contents = commentDTO.getContents();

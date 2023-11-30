@@ -45,6 +45,7 @@ public class CommentController {
     /* GET COMMENT BY ID */
     @GetMapping("/getComment/{id}")
     public ResponseEntity<CommentDTO> getComment(@PathVariable Long id) {
+
         CommentDTO comment = commentService.getCommentById(id);
 
         if (comment != null) {
