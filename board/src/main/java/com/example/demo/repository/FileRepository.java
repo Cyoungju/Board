@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import com.example.demo.dto.FileDTO;
+import com.example.demo.entity.Board;
 import com.example.demo.entity.BoardFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 

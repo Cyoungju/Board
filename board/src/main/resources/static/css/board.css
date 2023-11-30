@@ -1,6 +1,8 @@
+.main {position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);font-family: 'Montserrat', sans-serif;}
+.main-tit {text-align: center;font-size: 100px;font-weight: 600;}
+
 .board{padding: 120px 0;}
 .inputBox{display:flex;margin-bottom:10px}
-h3{margin:0;width:120px;font-size:20px;}
 
 /* tit animation */
 .tit{overflow: hidden;font-size: 5.000rem;font-family: 'Raleway', sans-serif;color: #000;font-weight:400;line-height:1.2em ;vertical-align: top;display: flex;flex-wrap: wrap;align-items: center;}
@@ -14,8 +16,80 @@ h3{margin:0;width:120px;font-size:20px;}
 .tit.animate span{display: block;vertical-align: top;padding-top: 4px;min-width: 20px;}
 .tit.animate span + span{position: absolute;top: -100%;left: 0;}
 
+.inputBox {margin-bottom: 20px;}
+.inputBox h3 {font-size: 18px;margin-bottom: 5px;color: #333;width: 120px;}
 
-.board .btn{cursor:pointer;color: #6f6f6f}
-.board .btn:hover{color: #333333}
+.inputBox input[type="text"],
+.inputBox textarea {width: 100%;padding: 8px;margin-bottom: 10px;box-sizing: border-box;}
+.inputBox input[type="file"] {margin-top: 5px;margin-bottom: 10px;}
+.inputBox input[type="submit"] {background-color: #333;color: #fff;padding: 10px 20px;border: none;cursor: pointer;border-radius: 5px;transition: background-color 0.3s ease;}
+input[type="submit"]:hover {background-color: #555;}
 
-/* 댓글 작성 */
+/* 페이지 css */
+table {background: var(--backgroundColor);display: table;text-indent: initial;width: 100%;border-collapse: collapse;border-spacing: 0 5px;border-bottom: 1px solid #ececec;background: #fff;border-top: 0;}
+thead {display: table-header-group;}
+tr {display: table-row;}
+tbody tr{border-left: 2px solid transparent;}
+tbody tr:hover{border-color: #000;background: #f5f5f5}
+th {display: table-cell;padding: 0;border-bottom: 0;height: auto;font-weight: normal;text-align: center;}
+tbody {display: table-row-group;border-top: 1px solid #000;}
+td {display: table-cell;word-break: break-all;border-bottom: 1px solid #ecf0f1;line-height: 1.4em;color: #666;padding: 15px 5px;text-align: center;border-top: 1px solid rgba(0,0,0,0.3);}
+.paging{text-align: center;margin: auto;margin-top: 30px;display: flex;justify-content: center;align-items: center;}
+.paging a{display: block}
+.paging .material-symbols-outlined{display: block}
+.paging > span{padding: 0 5px}
+.list button {border: 0;background: transparent;color: #333;display: flex;margin: 0 0 0 auto;margin-bottom: 30px;}
+.td_tit {width: 65%;text-align: left;padding-left: 30px;}
+.td_date{width:15%;}
+
+
+/* 게시판 view페이지 */
+.view-tit {font-size: 24px;font-weight: bold;margin-bottom: 10px;color: #333;border-bottom:1px solid #ddd}
+.view-desc {color: #555;margin-bottom: 20px;}
+.view-cont {padding-top: 20px;}
+.view-download{margin-bottom: 20px;border: 1px solid #ddd;padding: 10px;margin-top: 30px;}
+.view-btn button, input[type="submit"] {background-color: #333; color: #fff;padding: 10px 20px;border: none;cursor: pointer;margin-right: 10px;border-radius: 5px;transition: background-color 0.3s ease;margin-top:10px}
+.view-btn button:hover, input[type="submit"]:hover {background-color: #555;}
+
+.view-download {margin: 20px 0;padding: 15px;border: 1px solid #ddd;border-radius: 5px;background-color: #f9f9f9;}
+.view-download h3 {margin-bottom: 10px;font-size: 1.2em;color: #333;}
+.view-download ul {list-style: none;padding-left: 0;}
+.view-download ul li {margin-bottom: 10px;font-size: 1em;color: #666;}
+.view-download ul li a {display: inline-block;padding: 5px 10px;border: 1px solid #ddd;border-radius: 5px;color: #fff;background: #333;text-decoration: none;}
+.view-download ul li a:hover {background-color: #555;}
+
+.comment-wrap {margin-top: 30px;padding-top: 20px;}
+.comment-tit {font-size: 20px;font-weight: bold;margin-bottom: 10px;color: #333;border-bottom: 1px solid rgba(0,0,0,0.3);}
+
+.comment-btn {position: absolute;top: 10px;right: 10px;}
+.comment-btn button {background-color: #333;color: #fff;padding: 5px 10px;border: none;cursor: pointer;margin-right: 5px;border-radius: 3px;transition: background-color 0.3s ease;}
+.comment-btn button:hover {background-color: #555;}
+
+#comment-list .box {position: relative;top: 0;left: 0;padding: 10px;border:1px solid #ddd;margin-top: 10px;}
+#comment-list form {display: block;width: calc(100% - 50px);border: 1px solid #ddd;padding: 10px;margin: 10px 0 0 auto;}
+#comment-list form label {display: block;margin-bottom: 5px;}
+#comment-list form button {background-color: #333;color: #fff;padding: 8px 20px;border: none;cursor: pointer;border-radius: 5px;transition: background-color 0.3s ease;}
+#comment-list form button:hover {background-color: #555;}
+#comment-list form button[type="button"] {background-color: #ccc;color: #333;margin-right: 10px;}
+#comment-list form button[type="button"]:hover {background-color: #ddd;}
+#comment-list form div {margin-bottom: 10px;}
+
+#comment-write {margin-bottom: 20px;}
+#comment-write input, #comment-write button {margin-right: 10px;}
+#comment-write input {padding: 5px;}
+#comment-write button {background-color: #333;color: #fff;padding: 8px 15px;border: none;cursor: pointer;border-radius: 3px;transition: background-color 0.3s ease;}
+#comment-write button:hover {background-color: #555;}
+
+
+/* Responsive layout adjustments */
+@media screen and (max-width: 600px) {
+    .view-btn button {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    #comment-write input, #comment-write button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

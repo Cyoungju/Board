@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.dto.CommentDTO;
+import com.example.demo.dto.FileDTO;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
@@ -23,8 +24,9 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardservice;
-    private final FileRepository fileRepository;
     private final CommentService commentService;
+    private final FileRepository fileRepository;
+
 
     //Create
     @GetMapping("/create")
@@ -54,7 +56,12 @@ public class BoardController {
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Long id, Model model){
         BoardDTO boardDTO = boardservice.findById(id);
+
         model.addAttribute("board", boardDTO);//html에 있는 이름 그대로 사용
+
+
+        List<BoardFile> byBoardFiles = fileRepository.findByBoardId(id);
+        model.addAttribute("files", byBoardFiles);
         return "update";
     }
     //get은받아올수 없으니까!
@@ -62,8 +69,8 @@ public class BoardController {
     //Model로 보내줘야 html에서 데이터 사용할수 있음
 
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO){
-        boardservice.update(boardDTO);
+    public String update(@ModelAttribute BoardDTO boardDTO, MultipartFile[] files) throws IOException {
+        boardservice.update(boardDTO, files);
 
         return "redirect:/board/";
     }

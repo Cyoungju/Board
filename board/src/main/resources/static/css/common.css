@@ -11,9 +11,9 @@
     --boldWeight:300;
  
     /* Font */
-    --mainfont:'Noto Sans KR'; 
- 
+    --mainfont:'Noto Sans KR';
 
+    --backgroundColor : #fff;
 }
 
 /* ==================================================================
@@ -30,7 +30,7 @@ fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary, time, mark, audio, video {margin: 0;padding: 0;border: 0;font: inherit;vertical-align: baseline;}
 
-html, body{font-family: var(--mainfont), sans-serif;font-weight:var(--boldWeight);}
+html, body{font-family: var(--mainfont), sans-serif;font-weight:var(--boldWeight);background: var(--backgroundColor)}
 body{-webkit-font-smoothing: antialiased;-font-smoothing: antialiased;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
 div,span,p,ul,ol,li,dd,dt,dl,h1,h2,h3,h4,h5,h6{word-break: keep-all;} /* 줄바꿈 속성 (단어기준)*/

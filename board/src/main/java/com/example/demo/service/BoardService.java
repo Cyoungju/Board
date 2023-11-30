@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.dto.FileDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +25,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Transactional(readOnly = true) //서비스에는 readOnly 들어가야함
@@ -34,6 +40,8 @@ public class BoardService {
 
     // 절대경로
     // youngju 사용하는 pc이름으로 바꿔줘야함
+
+
     private final String filePath = "C:/Users/youngju/Desktop/developerPortfolio/boardList/board/Board Files/";
 
 
@@ -91,25 +99,31 @@ public class BoardService {
         //게시물 현재시간 저장
         boardDTO.setCreateTime(LocalDateTime.now());
 
-        Path uploadPath = Paths.get(filePath);
-
-        // ** 만약 경로가 없다면... 경로 생성.
-        if (!Files.exists(uploadPath)) {
-            try {
-                Files.createDirectories(uploadPath);
-            } catch (IOException e) {
-                // 예외 처리 추가 (예: 로깅)
-                e.printStackTrace();
-            }
-        }
-
         // ** 게시글 DB에 저장 후 pk을 받아옴.
         Long id = boardRepository.save(boardDTO.toEntity()).getId();
         Board board = boardRepository.findById(id).get();
-        if (files != null && files.length > 0) {
 
+
+        filesSave(board, files);
+    }
+
+    private void filesSave(Board board, MultipartFile[] files) throws IOException {
+        if (files != null && files.length > 0) {
             // ** 파일 정보 저장.
             for(MultipartFile file : files) {
+
+                Path uploadPath = Paths.get(filePath);
+
+                // ** 만약 경로가 없다면... 경로 생성.
+                if (!Files.exists(uploadPath)) {
+                    try {
+                        Files.createDirectories(uploadPath);
+                    } catch (IOException e) {
+                        // 예외 처리 추가 (예: 로깅)
+                        e.printStackTrace();
+                    }
+                }
+
                 // ** 파일명 추출
                 String originalFileName = file.getOriginalFilename();
                 if (originalFileName != null && !originalFileName.isEmpty()) {
@@ -139,10 +153,11 @@ public class BoardService {
                     fileRepository.save(boardFile);
                 }
             }
+
         }
     }
 
-
+/*
     private String createFilePath(MultipartFile file) throws IOException {
 
         // 업로드 경로
@@ -208,7 +223,7 @@ public class BoardService {
 
         return fileSize;
     }
-
+*/
     /*
     private String createFilePath(MultipartFile file) throws IOException {
 
@@ -268,16 +283,35 @@ public class BoardService {
 
 
     @Transactional
-    public void update(BoardDTO boardDTO) {
+    public void update(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
         Optional<Board> boardOptional = boardRepository.findById(boardDTO.getId());
 
-        //if (boardRepository.findById(id).isPresent())...  예외처리 생략
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            board.updateFromDTO(boardDTO);
 
-        Board board = boardOptional.get();
-        board.updateFromDTO(boardDTO);
+            //게시글에 당하는  파일 찾기
+            List<BoardFile> boardFiles = fileRepository.findByBoardId(board.getId());
 
-        boardRepository.save(board);
+            // 기존에 연결된 파일들 삭제
+
+            // 기존에 연결된 파일들 삭제
+            if (boardFiles != null && !boardFiles.isEmpty()) {
+                for (BoardFile file : boardFiles) {
+                    fileRepository.delete(file);
+                }
+            }
+            // 파일 저장
+            if (files != null && files.length > 0) {
+                filesSave(board, files);
+            }
+
+
+            // 게시물 업데이트
+            boardRepository.save(board);
+        }
     }
+
 }
 
 

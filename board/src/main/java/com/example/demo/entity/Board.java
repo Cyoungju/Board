@@ -69,7 +69,7 @@ public class Board {
         this.userName = boardDTO.getUserName();
         this.title = boardDTO.getTitle();
         this.contents = boardDTO.getContents();
-
+        this.files = (List<BoardFile>) files;
     }
 
 }

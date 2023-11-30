@@ -33,3 +33,7 @@ spring:
   h2:
     console:
       enabled: true
+
+
+file:
+  path: "C:/Users/youngju/Desktop/developerPortfolio/boardList/board/Board Files/"

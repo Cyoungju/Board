@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- css -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/board.css}">
 
@@ -29,13 +28,12 @@
                 <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName"> </div>
                 <div class="inputBox"><h3>title : </h3> <input type="text" name="title" required> </div>
                 <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10"></textarea> </div>
-                <div class="inputBox"><h3>file :</h3> <input type="file" name="files" multiple> </div>
+                <div class="inputBox"><h3>file :</h3>  <input type="file" name="files" multiple="multiple" onchange="test(this.files)"> </div>
+
 
                 <input type="submit" value="글작성">
             </form>
         </div>
     </div>
-
-
 </body>
 </html>

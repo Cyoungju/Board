@@ -7,22 +7,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/board.css}">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 
     <!-- js -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 
     <title>Title</title>
 </head>
 <body>
-    <div class="board write">
+    <div class="board list">
         <div class="container">
-            <div class="tit animate" data-aos="fade-down">Notice</div>
-            <div class="cont_box">
-                <button onclick="create()" class="btn"><span class="material-symbols-outlined">edit</span></button>
+              <div class="cont_box">
+              <div class="view-btn"><button onclick="create()" class="btn">글작성</button></div>
                 <table>
                     <thead>
                         <tr>
@@ -71,40 +68,5 @@
     const create = () => {
         location.href = "/board/create"
     }
-
-    // tit animation
-    $(".tit.animate").each(function(){
-        var tit = $(this);
-        var titSplit = tit.text().split("",-1);
-        tit.empty();
-        $.each(titSplit, function(i, b) {
-            tit.append(
-                '<p>'+
-                '<span>'+b+'</span>'+
-                '<span>'+b+'</span>'+
-                '</p>'
-            );
-        });
-    })
-    AOS.init();
 </script>
-
-
-<style>
-    table {display: table;text-indent: initial;width: 100%;border-collapse: collapse;border-spacing: 0 5px;border-bottom: 1px solid #ececec;background: #fff;border-top: 0;}
-    thead {display: table-header-group;}
-    tr {display: table-row;}
-    tbody tr{border-left: 2px solid transparent;}
-    tbody tr:hover{border-color: #000;background: #f5f5f5}
-    th {display: table-cell;padding: 0;border-bottom: 0;height: auto;font-weight: normal;text-align: center;}
-    tbody {display: table-row-group;border-top: 1px solid #000;}
-    td {display: table-cell;word-break: break-all;border-bottom: 1px solid #ecf0f1;line-height: 1.4em;color: #666;padding: 10px 5px;text-align: center;border-top: 1px solid rgba(0,0,0,0.3);}
-    .paging{text-align: center;margin: auto;margin-top: 30px;display: flex;justify-content: center;align-items: center;}
-    .paging a{display: block}
-    .paging .material-symbols-outlined{display: block}
-    .paging > span{padding: 0 5px}
-    button {border: 0;background: transparent;color: #333;display: flex;margin: 0 0 0 auto;margin-bottom: 30px;}
-    .td_tit {width: 65%;text-align: left;padding-left: 30px;}
-    .td_date{width:15%;}
-</style>
 </html>
