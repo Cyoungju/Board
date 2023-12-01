@@ -26,11 +26,11 @@ public class Board {
     private String userName;
 
     // ** 게시물 제목
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
 
     // ** 내용
-    @Column(length = 50)
+    @Column(length = 300)
     private String contents;
 
     // ** 작성 시간
@@ -38,6 +38,8 @@ public class Board {
 
     // ** 최근 수정 시간
     private LocalDateTime updateTime;
+
+
 
     // ** 연관관계 매핑 Entity에 작성 - Table
     // ** 1:다 연관관계
@@ -69,7 +71,6 @@ public class Board {
         this.userName = boardDTO.getUserName();
         this.title = boardDTO.getTitle();
         this.contents = boardDTO.getContents();
-        this.files = (List<BoardFile>) files;
     }
 
 }

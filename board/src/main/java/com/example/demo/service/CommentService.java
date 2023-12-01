@@ -82,8 +82,7 @@ public class CommentService {
             commentRepository.save(foundComment);
 
         } else {
-            // 찾은 댓글이 없는 경우에 대한 처리 (예외 발생 또는 다른 방식의 처리)
-            // 예외 발생 예시:
+            // 찾은 댓글이 없는 경우에 대한 처리
             throw new IllegalArgumentException("해당 댓글을 찾을 수 없습니다: " + commentId);
         }
     }

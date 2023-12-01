@@ -84,13 +84,18 @@ public class BoardService {
         //Optional존재유무 확인
         Optional<Board> boardOptional = boardRepository.findById(id);
 
+        // Optional.isPresent()를 사용하여 값이 있는지 확인
         if (boardOptional.isPresent()) {
             Board board = boardRepository.findById(id).get();
+            //toEntity에서 DTO로 데이터를 변환
             return BoardDTO.toboardDTO(board);
         }else {
             return null;
         }
     }
+    // 엔티티로 변환하여 저장했기 때문에 toboardDTO를 사용해서 toEntity에서 DTO로 데이터를 변환
+    //데이터 전송을 위해 DTO를 사용 - 데이터를 읽어오는 역할이기 때문에 DTO로 불러오는게 좋음
+    // 저장시에는 최종으로 엔티티에 저장해야함으로 toEntity를 이용해 DTO => Entity로 반환하는것
 
 
     //변경사항이 발생
@@ -290,49 +295,19 @@ public class BoardService {
             Board board = boardOptional.get();
             board.updateFromDTO(boardDTO);
 
-            //게시글에 당하는  파일 찾기
-            List<BoardFile> boardFiles = fileRepository.findByBoardId(board.getId());
-
-            // 기존에 연결된 파일들 삭제
-
-            // 기존에 연결된 파일들 삭제
-            if (boardFiles != null && !boardFiles.isEmpty()) {
-                for (BoardFile file : boardFiles) {
-                    fileRepository.delete(file);
-                }
-            }
             // 파일 저장
             if (files != null && files.length > 0) {
                 filesSave(board, files);
             }
-
 
             // 게시물 업데이트
             boardRepository.save(board);
         }
     }
 
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -28,12 +28,80 @@
                 <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName"> </div>
                 <div class="inputBox"><h3>title : </h3> <input type="text" name="title" required> </div>
                 <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10"></textarea> </div>
-                <div class="inputBox"><h3>file :</h3>  <input type="file" name="files" multiple="multiple" onchange="test(this.files)"> </div>
+                <a href="" class="addFiles">파일추가</a>
+                <div id="file-container">
+                </div>
 
 
                 <input type="submit" value="글작성">
             </form>
         </div>
     </div>
+    <script>
+        // 초기에 하나의 파일 업로드 상자 생성
+        var initialFileNumberBox = $('<div class="fileNumberBox">' +
+            '<div class="inputBox">' +
+            '<h3>file :</h3> <input type="file" name="files" class="fileInput" id="fileInput-1" onchange="showFileBox(this.files, 1)">' +
+            '</div>' +
+            '<div class="inputBox fullbox" id="fullbox-1">' +
+            '<div class="fileBox">' +
+            '<span class="fileName" id="fileName-1"></span>' +
+            '<a href="#" class="delete-btn" onclick="clearFileInput(1)">삭제</a>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+        $('#fullbox-1').hide();
+        initialFileNumberBox.appendTo('#file-container');
+
+        // 파일 추가 버튼 클릭시 파일 업로드 상자 추가
+        $('.addFiles').on('click', function (e) {
+            e.preventDefault();
+
+            // 새로운 파일 업로드 상자 추가
+            var newFileNumberBox = initialFileNumberBox.clone();
+
+            // 파일 번호 수정
+            var fileNumber = $('.fileNumberBox').length + 1;
+            newFileNumberBox.find('.fileInput').attr('onchange', 'showFileBox(this.files, ' + fileNumber + ')');
+            newFileNumberBox.find('.fileInput').attr('id', 'fileInput-' + fileNumber);
+            newFileNumberBox.find('.fileName').attr('id', 'fileName-' + fileNumber);
+            newFileNumberBox.find('.fullbox').attr('id', 'fullbox-' + fileNumber);
+            newFileNumberBox.find('.delete-btn').attr('onclick', 'clearFileInput(' + fileNumber + ')');
+
+            // 입력 필드 초기화
+            newFileNumberBox.find('#fileInput-' + fileNumber).val('');
+            newFileNumberBox.find('.fileName').text('');
+
+            // 숨겨진 상자를 표시하고 DOM에 추가
+            newFileNumberBox.appendTo('#file-container');
+            $('#fullbox-'+fileNumber).hide();
+        });
+
+        function showFileBox(files, fileNumber) {
+            var fileName = files.length > 0 ? files[0].name : '';
+            $('#fileName-' + fileNumber).text(fileName);
+
+            // 선택된 파일이 있을 때 fileBox 보이기
+            if (fileName) {
+                $('#fullbox-' + fileNumber).show();
+            } else {
+                $('#fullbox-' + fileNumber).hide();
+            }
+        }
+
+        // 파일 삭제 버튼 클릭 시 파일 입력 필드 초기화
+        function clearFileInput(fileNumber) {
+            // 파일 입력 필드 초기화
+            $('#fileInput-' + fileNumber).val('');
+            $('#fileName-' + fileNumber).text('');
+            $('#fullbox-' + fileNumber).hide();
+            return false;
+        }
+    </script>
+    <style>
+        [id^="fullbox-"] {
+            display: none;
+        }
+    </style>
 </body>
 </html>

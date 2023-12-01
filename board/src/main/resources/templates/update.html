@@ -9,6 +9,10 @@
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/board.css}">
 
+    <!-- js -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+
     <title>BoardList</title>
 </head>
 <body>
@@ -19,22 +23,86 @@
             <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName" th:value="${board.getUserName()}"> </div>
             <div class="inputBox"><h3>title : </h3> <input type="text" name="title" th:value="${board.getTitle()}" required> </div>
             <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10" th:value="${board.getContents()}" th:text="${board.getContents()}"></textarea> </div>
-            <div class="inputBox"><h3>file :</h3>
-                <!-- Display existing file names -->
-                <div th:each="file : ${files}" th:if="${not #lists.isEmpty(files)}">
-                    <span th:text="${file.getFileName()}"></span>
-                    <input type="hidden" name="existingFiles" th:value="${file.getFileName()}">
-                    <br/>
+            <a href="" class="addFiles">파일추가</a>
+            <div id="file-container">
+                <!-- 파일 번호 및 파일 정보 루프 -->
+                <div class="fileNumberBox" th:each="file, stat: ${files}">
+                    <div class="inputBox">
+                        <h3>file :</h3>
+                        <input type="file" name="files" class="fileInput"
+                               th:id="'fileInput-' + ${stat.index + 1}"
+                               th:onchange="'showFileBox(this.files,' + ${stat.index + 1} +')'"
+                               th:value="${file}">
+                    </div>
+                    <div class="inputBox fullbox" th:id="'fullbox-' + ${stat.index + 1}">
+                        <div class="fileBox">
+                            <span class="fileName" th:id="'fileName-' + ${stat.index + 1}" th:text="${file.fileName}"></span>
+                            <a href="#" class="delete-btn" th:onclick="'clearFileInput(' + ${stat.index + 1} + ',' + ${file.id} +')'">삭제</a>
+                        </div>
+                    </div>
                 </div>
-                <!-- Allow uploading new files -->
-                <input type="file" name="newFiles" multiple="multiple">
+
+
             </div>
-
-
             <input type="submit" value="글수정">
         </form>
     </div>
 </div>
+<script>
+    var initialFileNumberBox = $('<div class="fileNumberBox">' +
+        '<div class="inputBox">' +
+        '<h3>file :</h3> <input type="file" name="files" class="fileInput" id="fileInput-1" onchange="showFileBox(this.files, 1)">' +
+        '</div>' +
+        '<div class="inputBox fullbox" id="fullbox-1">' +
+        '<div class="fileBox">' +
+        '<span class="fileName" id="fileName-1"></span>' +
+        '<a href="#" class="delete-btn" onclick="clearFileInput(1)">삭제</a>' +
+        '</div>' +
+        '</div>' +
+        '</div>');
+    $('.addFiles').on('click', function (e) {
+        e.preventDefault();
+
+        // 새로운 파일 업로드 상자 추가
+        var newFileNumberBox = initialFileNumberBox.clone();
+
+        // 파일 번호 수정
+         var fileNumber = $('.fileNumberBox').length +1;
+         console.log(fileNumber);
+        newFileNumberBox.find('.fileInput').attr('onchange', 'showFileBox(this.files, ' + fileNumber + ')');
+        newFileNumberBox.find('.fileInput').attr('id', 'fileInput-' + fileNumber);
+        newFileNumberBox.find('.fileName').attr('id', 'fileName-' + fileNumber);
+        newFileNumberBox.find('.fullbox').attr('id', 'fullbox-' + fileNumber);
+        newFileNumberBox.find('.delete-btn').attr('onclick', 'clearFileInput(' + fileNumber + ')');
+
+        // 입력 필드 초기화
+        newFileNumberBox.find('#fileInput-' + fileNumber).val('');
+        newFileNumberBox.find('.fileName').text('');
+
+        // 숨겨진 상자를 표시하고 DOM에 추가
+        newFileNumberBox.appendTo('#file-container');
+        $('#fullbox-'+fileNumber).hide();
+    });
+    function showFileBox(files, fileNumber) {
+        var fileName = files.length > 0 ? files[0].name : '';
+        $('#fileName-' + fileNumber).text(fileName);
+
+        // 선택된 파일이 있을 때 fileBox 보이기
+        if (fileName) {
+            $('#fullbox-' + fileNumber).show();
+        } else {
+            $('#fullbox-' + fileNumber).hide();
+        }
+    }
+    function clearFileInput(fileNumber) {
+        // 파일 입력 필드 초기화
+        $('#fileInput-' + fileNumber).val('');
+        $('#fileName-' + fileNumber).text('');
+        $('#fullbox-' + fileNumber).hide();
+        return false;
+    }
+
+</script>
 
 
 </body>
