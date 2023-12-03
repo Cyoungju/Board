@@ -15,20 +15,20 @@ Board_v1.0.0
 ### 1. 글쓰기(/board/save)
 - 홈화면, 글 목록 페이지에서 글 쓰기 버튼 클릭
 
-![글쓰기](./board/src/main/resources/static/image/board1.png){: border: 1px solid #eee}
+<img src="./board/src/main/resources/static/image/board1.png" style="border:1px solid #eeeeee" alt="글쓰기">
 
 ### 2. 글목록(/board/)
- ![글목록](./board/src/main/resources/static/image/board2.png){: border: 1px solid #eee}
+<img src="./board/src/main/resources/static/image/board2.png" style="border:1px solid #eeeeee" alt="글목록">
 
 ### 3. 글조회(/board/{id})
-![글조회](./board/src/main/resources/static/image/board3.png){: border: 1px solid #eee}
+<img src="./board/src/main/resources/static/image/board3.png" style="border:1px solid #eeeeee" alt="글목록">
 
 ### 4. 글수정(/board/update/{id})
  - 상세화면에서 수정 버튼 클릭
  - 서버에서 해당 게시글의 정보를 가지고 수정 화면 출력
  - 제목, 내용 수정 입력 받아서 서버로 요청
 
-![글수정](./board/src/main/resources/static/image/board5.png){: border: 1px solid #eee}
+<img src="./board/src/main/resources/static/image/board5.png" style="border:1px solid #eeeeee" alt="글목록">
 
 ## 수정 처리
 ### 1. 글삭제(/board/delete/{id})
@@ -46,7 +46,7 @@ Board_v1.0.0
 ### 5. 댓글 기능 추가
 - 수정 , 삭제 기능 구현 완료
 
-![댓글 기능 추가](./board/src/main/resources/static/image/board5.png){: border: 1px solid #eee}
+<img src="./board/src/main/resources/static/image/board4.png" style="border:1px solid #eeeeee" alt="댓글기능 추가">
 
 
 ## 향후 업데이트 예정 기능
