@@ -42,6 +42,14 @@ td {display: table-cell;word-break: break-all;border-bottom: 1px solid #ecf0f1;l
 .td_tit {width: 65%;text-align: left;padding-left: 30px;}
 .td_date{width:15%;}
 
+/* 글작성/ 수정 페이지 */
+.addFiles {display: flex;align-items: center;margin-bottom: 20px}
+.inputBox.fullbox {position: absolute;top: 50%;right: 8px;transform: translateY(-50%);margin-bottom: 0;}
+.fileBox{display: flex;align-items: center}
+.fileBox .delete-btn{display: block}
+.fileBox .delete-btn > span{display: block}
+.fileNumberBox {position: relative;top: 0;left: 0;}
+.fileNumberBox .inputBox input[type="file"] {border: 1px solid rgb(118, 118, 118);padding:8px;margin: 0;width:100%;padding-right:210px}
 
 /* 게시판 view페이지 */
 .view-tit {font-size: 24px;font-weight: bold;margin-bottom: 10px;color: #333;border-bottom:1px solid #ddd}
