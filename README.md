@@ -1,26 +1,38 @@
 # 게시판 구현
 
-## 버전
-Board_v1.0.0
 
 ## 개발환경
 - IDE: IntelliJ IDEA Community
+- Gradle - Groovy, Java 17
+- Jar 11
 - Spring Boot 2.7.6
+- jvm.convert 3.3.2
 - JDK 11
 - mysql 8.0.35
+- Lombok
+- Spring Web
 - Spring Data JPA
 - Thymeleaf
 
 ## 게시판 주요 기능
 ### 1. 글쓰기(/board/save)
 - 홈화면, 글 목록 페이지에서 글 쓰기 버튼 클릭
+- 파일(이미지)첨부하기 다중
 
 <img src="./board/src/main/resources/static/image/board1.png" style="border:1px solid #eeeeee" alt="글쓰기">
 
-### 2. 글목록(/board/)
+### 2. 글목록(/board/, /board/paging)
+- 한페이지에 게시글 5개씩
+- 최대 3개 페이지
+- /board/paging?page=1
+- board/pading/1
+
 <img src="./board/src/main/resources/static/image/board2.png" style="border:1px solid #eeeeee" alt="글목록">
 
+
 ### 3. 글조회(/board/{id})
+- 게시글에 첨부한 파일(이미지) 다운(/download/{uuid}/{filename})
+
 <img src="./board/src/main/resources/static/image/board3.png" style="border:1px solid #eeeeee" alt="글목록">
 
 ### 4. 글수정(/board/update/{id})
@@ -30,26 +42,33 @@ Board_v1.0.0
 
 <img src="./board/src/main/resources/static/image/board5.png" style="border:1px solid #eeeeee" alt="글목록">
 
-## 수정 처리
-### 1. 글삭제(/board/delete/{id})
 
-### 2. 페이징처리(/board/paging)
- - /board/paging?page=1
- - /board/paging/1
+### 5. 글삭제(/board/delete/{id})
+- 상세페이지 글 삭제 버튼 클릭
 
-### 3. 게시글
- - 한페이지에 5개씩 => 3개
- - 한페이지에 3개씩 => 5개
 
-### 4. 파일(이미지)첨부하기
+### 6. 댓글
+#### a. 댓글 추가(/comment/save)
+#### b. 댓글 전체보기{/getComment/{id}}
+#### c. 댓글 수정(/update/{id}/comments/{commentId})
+#### d. 댓글 삭제(/delete/{id}/comments/{commentId})
+<img src="./bomard/src/main/resources/static/image/board4.png" style="border:1px solid #eeeeee" alt="댓글기능 추가">
+<br><br>
 
-### 5. 댓글 기능 추가
-- 수정 , 삭제 기능 구현 완료
+## 로그인, 회원가입 기능
+### 1. 회원가입(/login)
+- 이메일, 비밀번호, 사용자 이름, 전화번호
+<이미지>
 
-<img src="./board/src/main/resources/static/image/board4.png" style="border:1px solid #eeeeee" alt="댓글기능 추가">
+### 2. 이메일 중복 확인 (/check)
+
+### 3. 로그인(/login)
+<이미지>
 
 
 ## 향후 업데이트 예정 기능
-### 1. 다중 파일 첨부
+#### 1. 다중 파일 첨부 이미지 덮어쓰기 기능
 
-### 2. 게시글 삭제 클릭시 alter창 띄우기
+#### 2. 게시글 삭제 클릭시 alter창 띄우기
+
+#### 3. kakaoLogin RestApi 기능 추가 예정

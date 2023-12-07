@@ -4,21 +4,42 @@
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/board.css}">
 
     <title>Title</title>
 </head>
 <body>
+<header>
+    <div class="header-container">
+        <div class="logo">Spring boot Board</div>
+        <nav>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/board/create">게시판 글쓰기</a></li>
+                <li><a href="/board/paging">게시판 목록</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
     <div class="main">
-        <div class="main-tit">HOME</div>
-        <div class="view-btn" style="text-align: center">
-            <button onclick="create()">글쓰기</button>
-            <button onclick="paging()">글 목록</button>
+        <div class="main_wrap">
+            <div class="main-tit">
+                환영합니다!
+            </div>
+            <div class="main-desc">
+                ❤️<span>SpringBoot, Thyemleaf, MySQL</span>을 활용한 게시판 만들기❤️
+            </div>
+            <div class="view-btn" style="text-align: center">
+                <button onclick="create()">글쓰기</button>
+                <button onclick="paging()">글 목록</button>
+            </div>
         </div>
     </div>
+    <footer>
+        <p>&copy; 2023 Your Website YoungjuSpringBootBoard. All Rights Reserved.</p>
+    </footer>
 </body>
 <script>
     const create = () => {
@@ -29,4 +50,31 @@
         location.href = "/board/paging"
     }
 </script>
+
+<style>
+    body{
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+    }
+    header {background-color: #333;color: #fff;padding: 20px 0;text-align: center;}
+    .header-container {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;}
+    .logo {font-size: 36px;font-weight: bold;width: 100%;}
+    nav{margin-top: 30px;}
+    nav ul {list-style-type: none;margin: 0;padding: 0;display: flex;}
+    nav ul li {margin-right: 10px;}
+    nav ul li a {text-decoration: none;color: #fff;padding: 10px;border-radius: 5px;transition: background-color 0.3s;}
+    nav ul li a:hover {background-color: #555;}
+
+
+    footer{background: #333;color: #fff;text-align: center;padding: 10px 0}
+
+    @keyframes blink {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
 </html>
