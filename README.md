@@ -1,4 +1,5 @@
 # 게시판 구현
+SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기
 
 
 ## 개발환경
