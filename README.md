@@ -54,7 +54,7 @@ SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기
 #### b. 댓글 전체보기{/getComment/{id}}
 #### c. 댓글 수정(/update/{id}/comments/{commentId})
 #### d. 댓글 삭제(/delete/{id}/comments/{commentId})
-<img src="./bomard/src/main/resources/static/image/board4.png" style="border:1px solid #eeeeee" alt="댓글기능 추가">
+<img src="./board/src/main/resources/static/image/board4.png" style="border:1px solid #eeeeee" alt="댓글기능 추가">
 <br><br>
 
 
