@@ -1,7 +1,6 @@
 # 게시판 구현
-SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기<br>
-<img src="./board/src/main/resources/static/image/board6.png" style="border:1px solid #eeeeee" alt="메인">
-
+SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기 
+<br><br>
 ## 개발환경
 - IDE: IntelliJ IDEA Community
 - Gradle - Groovy, Java 17
@@ -101,4 +100,5 @@ SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기<br>
 
 
 ### v1.0.0 (2023.11.21)
-- [추가] 게시글 작성(/board/save)
+- [추가] 게시글 작성(/board/save)<br><br>
+<img src="./board/src/main/resources/static/image/board6.png" style="border:1px solid #eeeeee" alt="메인">
