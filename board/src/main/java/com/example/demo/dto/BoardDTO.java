@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Board;
+import com.example.demo.user.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,11 @@ public class BoardDTO {
 
     private LocalDateTime updateTime;
 
+    private User user;
+
+    private String password;
+    private String userEmail;
+
     // DTO -> toEntity로 변환
     public Board toEntity() {
         return Board.builder()
@@ -33,6 +39,8 @@ public class BoardDTO {
                 .createTime(createTime)
                 .updateTime(LocalDateTime.now()) //수정된 시간
                 .userName(userName)
+                .password(password)
+                .userEmail(userEmail)
                 .build();
     }
 
@@ -44,7 +52,11 @@ public class BoardDTO {
                 board.getTitle(),
                 board.getContents(),
                 board.getCreateTime(),
-                board.getUpdateTime());
+                board.getUpdateTime(),
+                board.getUser(),
+                board.getPassword(),
+                board.getUserEmail()
+        );
     }
 }
 

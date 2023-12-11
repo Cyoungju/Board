@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 import com.example.demo.dto.BoardDTO;
+import com.example.demo.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,10 @@ public class Board {
     // ** 최근 수정 시간
     private LocalDateTime updateTime;
 
+    private String password;
+
+    private String userEmail;
+
 
 
     // ** 연관관계 매핑 Entity에 작성 - Table
@@ -53,16 +58,22 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFile> files = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 
     @Builder
-    public Board(Long id, String userName, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Board(Long id, String userName, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime, String password, String userEmail) {
         this.id = id;
         this.userName = userName;
         this.title = title;
         this.contents = contents;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.password = password;
+        this.userEmail = userEmail;
     }
 
 
@@ -71,6 +82,7 @@ public class Board {
         this.userName = boardDTO.getUserName();
         this.title = boardDTO.getTitle();
         this.contents = boardDTO.getContents();
+        this.password = boardDTO.getPassword();
     }
 
 }

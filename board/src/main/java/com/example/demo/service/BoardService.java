@@ -6,6 +6,8 @@ import com.example.demo.entity.Board;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.FileRepository;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
     private final FileRepository fileRepository;
 
     // 절대경로
@@ -73,7 +76,10 @@ public class BoardService {
                 board.getTitle(),
                 board.getContents(),
                 board.getCreateTime(),
-                board.getUpdateTime()
+                board.getUpdateTime(),
+                board.getUser(),
+                board.getPassword(),
+                board.getUserEmail()
                 // for문 이라고 생각하면됨
                 // 람다식 공부하기!
         ));
@@ -104,9 +110,11 @@ public class BoardService {
         //게시물 현재시간 저장
         boardDTO.setCreateTime(LocalDateTime.now());
 
+
         // ** 게시글 DB에 저장 후 pk을 받아옴.
         Long id = boardRepository.save(boardDTO.toEntity()).getId();
         Board board = boardRepository.findById(id).get();
+
 
 
         filesSave(board, files);
@@ -280,6 +288,21 @@ public class BoardService {
         return "";
     }
     */
+
+    public void checkPassword(Long id, String password) {
+        Optional<Board> boardOptional = boardRepository.findById(id);
+
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+
+            // 비밀번호 확인
+            if (!board.getPassword().equals(password)) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+        } else {
+            throw new IllegalArgumentException("게시물이 존재하지 않습니다.");
+        }
+    }
 
     @Transactional
     public void delete(Long id) {

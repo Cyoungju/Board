@@ -27,7 +27,19 @@
                 <!-- post의 방법으로 -->
                 <!-- /board/save -->
 
-                <div class="inputBox"><h3>UserName : </h3> <input type="text" name="userName"> </div>
+                <!-- 회원일때 -->
+                <input th:if="${user != null}" type="text" name="userName" th:value="${user.username}" hidden>
+                <input th:if="${user != null}" type="text" name="userEmail" th:value="${user.email}" hidden>
+
+                <!-- 비회원일때 -->
+                <div class="inputBox" th:if="${user == null}"><h3>UserName : </h3> <input type="text" name="userName"> </div>
+
+                <div th:if="${user == null}">
+                    <!-- 비밀번호 입력 -->
+                    <span class="passwordDesc">** 게시글 삭제, 수정을 위해 꼭 기억해주세요! **</span>
+                    <div class="inputBox"><h3>Password:</h3> <input type="password" name="password" required></div>
+                </div>
+
                 <div class="inputBox"><h3>title : </h3> <input type="text" name="title" required> </div>
                 <div class="inputBox"><h3>contents :</h3> <textarea name="contents" cols="30" rows="10"></textarea> </div>
                 <a href="" class="addFiles"><span class="material-symbols-outlined">add_circle</span>파일추가</a>

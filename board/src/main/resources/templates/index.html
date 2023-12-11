@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,12 +26,13 @@
     <div class="main">
         <div class="main_wrap">
             <div class="main-tit">
-                환영합니다!
+                <span th:if="${user != null}"><b th:text="${user.username}"></b> 님</span> 환영합니다!
             </div>
             <div class="main-desc">
                 ❤️<span>SpringBoot, Thyemleaf, MySQL</span>을 활용한 게시판 만들기❤️
             </div>
             <div class="view-btn" style="text-align: center">
+                <button onclick="login()">로그인</button>
                 <button onclick="create()">글쓰기</button>
                 <button onclick="paging()">글 목록</button>
             </div>
@@ -42,6 +43,9 @@
     </footer>
 </body>
 <script>
+    const login = () => {
+        location.href = "/login"
+    }
     const create = () => {
         location.href = "/board/create"
     }
