@@ -1,5 +1,5 @@
-# 게시판 구현
-🚀 SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기 
+# 🚀 게시판 구현
+SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기 
 <br><br>
 ## 개발환경
 - IDE: IntelliJ IDEA Community
