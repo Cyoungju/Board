@@ -1,5 +1,5 @@
 # 게시판 구현
-SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기 
+🚀 SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기 
 <br><br>
 ## 개발환경
 - IDE: IntelliJ IDEA Community
@@ -40,12 +40,16 @@ SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기
  - 상세화면에서 수정 버튼 클릭
  - 서버에서 해당 게시글의 정보를 가지고 수정 화면 출력
  - 제목, 내용 수정 입력 받아서 서버로 요청
+ - 본인이 작성한 게시글 수정 가능
+  - 비회원 : 비밀번호 작성 
 
 <img src="./board/src/main/resources/static/image/board5.png" style="border:1px solid #eeeeee" alt="글목록">
 
 
 ### 5. 글삭제(/board/delete/{id})
 - 상세페이지 글 삭제 버튼 클릭
+- 본인이 작성한 게시글 삭제제 가능
+ - 비회원 : 비밀번호 작성 
 
 
 ### 6. 댓글
@@ -57,20 +61,29 @@ SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기
 <br><br>
 
 
+## 로그인/회원가입
+
+### 1.로그인
+
+### 2. 회원가입
+<br><br>
+
 ## 향후 업데이트 예정 기능
 #### 1. 다중 파일 첨부 이미지 덮어쓰기 기능
-
-#### 2. 게시글 삭제 클릭시 alter창 띄우기
-
-#### 3. kakaoLogin RestApi 기능 추가 예정
+#### 2. kakaoLogin RestApi 기능 추가 예정
 <br><br>
 
 
 ## 버전
 
-### v1.4.2 (2023.11.29)
+### v2.4.4 (2023.12.11)
+- [추가] 로그인/ 회원가입 기능
+- [수정] 본인이 작성한 게시글만 수정 삭제 기능 
+ 
+### v1.4.3 (2023.11.29)
 - [추가] 파일 업데이트, 수정, 삭제
-- [추가] 레이아웃  
+- [추가] 레이아웃
+- [수정] 댓글 작성 기능 
 
 ### v1.3.2 (2023.11.28)
 - [추가] 게시글에 첨부한 파일(이미지) 다운(/download/{uuid}/{filename})
