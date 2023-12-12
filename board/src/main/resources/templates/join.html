@@ -2,12 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <link rel="stylesheet" th:href="@{/css/member.css}">
+<link rel="stylesheet" th:href="@{/css/common.css}">
 <head>
     <meta charset="UTF-8">
     <title>Join Form</title>
 </head>
 <body>
-
+<header>
+    <div class="header-container">
+        <div class="logo">Spring boot Board</div>
+        <nav>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/board/create">게시판 글쓰기</a></li>
+                <li><a href="/board/paging">게시판 목록</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="memberWrap">
     <div class="inner">
         <h1>Join</h1>

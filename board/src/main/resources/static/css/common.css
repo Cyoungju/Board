@@ -63,6 +63,20 @@ img{
 .container{width:var(--layoutwidth);margin: auto;}
 .cont_box {margin-top: 4.68rem;}
 
+/* header */
+header {background-color: #333;color: #fff;padding: 20px 0;text-align: center;}
+.header-container {display: flex;justify-content: center;align-items: center;flex-wrap: wrap;}
+.logo {font-size: 36px;font-weight: bold;width: 100%;}
+nav{margin-top: 30px;}
+nav ul {list-style-type: none;margin: 0;padding: 0;display: flex;}
+nav ul li {margin-right: 10px;}
+nav ul li a {text-decoration: none;color: #fff;padding: 10px;border-radius: 5px;transition: background-color 0.3s;}
+nav ul li a:hover {background-color: #555;}
+
+
+footer{background: #333;color: #fff;text-align: center;padding: 10px 0}
+
+
 @media (max-width: 1240px) {
     .container{width:90%}
 }

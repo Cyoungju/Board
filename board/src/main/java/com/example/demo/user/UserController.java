@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.UUID;
 
@@ -47,5 +48,17 @@ public class UserController {
                 .body(ApiUtils.success(jwtToken));
     }
 
+    @PostMapping("/logout")
+    public RedirectView logout(HttpServletResponse response) {
+        // 쿠키에서 토큰을 삭제
+        Cookie cookie = new Cookie("token", null);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0); // 쿠키 만료시간을 0으로 설정하여 삭제
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        // 로그아웃 성공 시 메인 페이지로 리다이렉트
+        return new RedirectView("/");
+    }
 
 }

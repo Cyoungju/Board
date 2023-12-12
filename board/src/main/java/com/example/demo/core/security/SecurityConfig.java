@@ -110,6 +110,11 @@ public class SecurityConfig {
                         .access("hasRole('ADMIN')")
                         .anyRequest().permitAll() //다른 주소는 모두 허용
         );
+        http.logout()
+                .logoutUrl("/logout")  // 로그아웃 URL 지정
+                .logoutSuccessUrl("/") // 로그아웃 성공 시 리다이렉트할 URL 지정
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "token");
 
         return http.build();
     }

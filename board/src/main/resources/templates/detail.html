@@ -13,6 +13,18 @@
     <title>detail</title>
 </head>
 <body>
+<header>
+    <div class="header-container">
+        <div class="logo">Spring boot Board</div>
+        <nav>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/board/create">게시판 글쓰기</a></li>
+                <li><a href="/board/paging">게시판 목록</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <div class="board view">
     <div class="container">
         <div class="cont_box">
@@ -77,9 +89,9 @@
                             <div th:text="${comment.writer}"></div>
                             <div th:text="${comment.contents}"></div>
                             <div th:text="${comment.createTime}"></div>
-                            <div class="comment-btn">
-                                <button th:attr="onclick='openUpdateForm(' + ${comment.id} + ')'">수정</button>
-                                <button th:attr="onclick='deleteComment(' + ${comment.id} + ')'">삭제</button>
+                            <div class="comment-btn"  th:if="${user != null}">
+                                <button th:if="${user.email == board.userEmail}" th:attr="onclick='openUpdateForm(' + ${comment.id} + ')'">수정</button>
+                                <button th:if="${user.email == board.userEmail}" th:attr="onclick='deleteComment(' + ${comment.id} + ')'">삭제</button>
                             </div>
                         </div>
 
@@ -205,6 +217,12 @@
 
     //댓글작성
     const commentWrite = () => {
+        const user = [[${user}]];
+        if (user === null) {
+            // 사용자가 로그인하지 않은 경우 알림 표시
+            alert("댓글을 작성하려면 로그인이 필요합니다.");
+            return;
+        }
         const jsWriter = document.getElementById("writer").value;
         const jsContents = document.getElementById("contents").value;
         console.log("작성자: ", jsWriter);
