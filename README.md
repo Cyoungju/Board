@@ -3,7 +3,7 @@ SpringBoot, Thyemleaf, MySQL을 활용한 게시판 만들기
 <br><br>
 ## 개발환경
 - IDE: IntelliJ IDEA Community
-- Gradle - Groovy, Java 17
+- Gradle - Java 11
 - Jar 11
 - Spring Boot 2.7.6
 - jvm.convert 3.3.2
